@@ -141,15 +141,6 @@ command! -buffer ListLists call qf#namedlist#ListLists()
 " remove given lists or all
 command! -buffer -nargs=* -bang -complete=customlist,qf#namedlist#CompleteList RemoveList call qf#namedlist#RemoveList(expand("<bang>") == "!" ? 1 : 0, <q-args>)
 
-" navigate between older and newer lists
-nnoremap <silent> <buffer> <Left> :call qf#history#Older()<CR>
-nnoremap <silent> <buffer> <Right> :call qf#history#Newer()<CR>
-
-" TODO: allow customization
-" jump to previous/next file grouping
-nnoremap <silent> <buffer> } :call qf#filegroup#NextFile()<CR>
-nnoremap <silent> <buffer> { :call qf#filegroup#PreviousFile()<CR>
-
 " quit Vim if the last window is a quickfix window
 autocmd qf BufEnter    <buffer> nested if get(g:, 'qf_auto_quit', 1) | if winnr('$') < 2 | q | endif | endif
 autocmd qf BufWinEnter <buffer> nested if get(g:, 'qf_auto_quit', 1) | call qf#filter#ReuseTitle() | endif
@@ -166,10 +157,6 @@ let b:undo_ftplugin .= "| delcommand Filter"
             \ . "| delcommand LoadListAdd"
             \ . "| delcommand ListLists"
             \ . "| delcommand RemoveList"
-            \ . "| execute 'nunmap <buffer> }'"
-            \ . "| execute 'nunmap <buffer> {'"
-            \ . "| execute 'nunmap <buffer> <Left>'"
-            \ . "| execute 'nunmap <buffer> <Right>'"
             \ . "| unlet! b:qf_isLoc"
 
 " decide where to open the location/quickfix window
